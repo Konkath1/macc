@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACC PULSE | Εβδομαδιαία Αναφορά</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #e5e7eb;
+            border-radius: 5px;
+            margin-top: 8px;
+        }
+        .progress-fill {
+            height: 10px;
+            background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .btn {
+            background: #4f46e5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .btn:hover {
+            background: #2563eb;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 8px;
+        }
+        .status-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .success-message {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+            display: none;
+        }
+        .error-message {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+            display: none;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="text-3xl font-bold mb-2">MACC PULSE | Εβδομαδιαία Αναφορά</h1>
+            <p class="text-lg opacity-90">Σύγχρονο και αποτελεσματικό εργαλείο για στοχοθεσία, απολογισμό, δικτύωση και ομαδικότητα</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <p><i class="fas fa-check-circle status-icon text-green-600"></i> Η αναφορά αποθηκεύτηκε επιτυχώς!</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            <p><i class="fas fa-exclamation-circle status-icon text-red-600"></i> <span id="errorText">Σφάλμα κατά την αποθήκευση. Παρακαλώ προσπαθήστε ξανά.</span></p>
+        </div>
+
+        <form id="maccPulseForm">
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-user-circle"></i> Βασικές Πληροφορίες</h2>
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="name">Ονοματεπώνυμο*</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Τμήμα/Ρόλος*</label>
+                        <input type="text" id="department" name="department" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="week">Εβδομάδα Αναφοράς*</label>
+                    <input type="text" id="week" name="week" placeholder="πχ. 22-28 Μαΐου 2025" required>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Στοχοθεσία & Απολογισμός</h2>
+                <div class="form-group">
+                    <label for="achievements">Κύρια επιτεύγματα της εβδομάδας*</label>
+                    <textarea id="achievements" name="achievements" placeholder="Περιγράψτε τα 3-5 κυριότερα επιτεύγματά σας αυτή την εβδομάδα" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="nextGoals">Στόχοι επόμενης εβδομάδας*</label>
+                    <textarea id="nextGoals" name="nextGoals" placeholder="Καταγράψτε τους 3-5 βασικούς στόχους για την επόμενη εβδομάδα" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quarterlyProgress">Πρόοδος τριμηνιαίων στόχων (%)</label>
+                    <input type="range" id="quarterlyProgress" name="quarterlyProgress" min="0" max="100" value="50" oninput="updateProgressBar(this.value)">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 50%"></div>
+                    </div>
+                    <p class="text-right mt-1" id="progressPercentage">50%</p>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="challenges">Προκλήσεις & εμπόδια</label>
+                        <textarea id="challenges" name="challenges" placeholder="Ποιες προκλήσεις αντιμετωπίσατε αυτή την εβδομάδα;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessons">Διδάγματα & παρατηρήσεις</label>
+                        <textarea id="lessons" name="lessons" placeholder="Τι μάθατε αυτή την εβδομάδα;"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-network-wired"></i> Δικτύωση & Ομαδικότητα</h2>
+                <div class="form-group">
+                    <label for="collaborations">Βασικές συνεργασίες της εβδομάδας</label>
+                    <textarea id="collaborations" name="collaborations" placeholder="Με ποια άτομα ή τμήματα συνεργαστήκατε αυτή την εβδομάδα;"></textarea>
+                </div>
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="howCanIHelp">Πώς μπορώ να βοηθήσω άλλα μέλη/τμήματα</label>
+                        <textarea id="howCanIHelp" name="howCanIHelp" placeholder="Πώς θα μπορούσατε να βοηθήσετε άλλα μέλη της ομάδας;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="whereINeedHelp">Πού χρειάζομαι βοήθεια/υποστήριξη</label>
+                        <textarea id="whereINeedHelp" name="whereINeedHelp" placeholder="Σε ποιους τομείς χρειάζεστε βοήθεια;"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Σημαντικές Πρωτοβουλίες & Επόμενα Βήματα</h2>
+                <div class="form-group">
+                    <label for="initiatives">Σημαντικές αποφάσεις/πρωτοβουλίες</label>
+                    <textarea id="initiatives" name="initiatives" placeholder="Καταγράψτε σημαντικές αποφάσεις ή πρωτοβουλίες που λάβατε"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="nextSteps">Άμεσα επόμενα βήματα</label>
+                    <textarea id="nextSteps" name="nextSteps" placeholder="Ποια είναι τα επόμενα συγκεκριμένα βήματα που θα ακολουθήσετε;"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn w-full text-lg py-3"><i class="fas fa-save mr-2"></i> Αποθήκευση Αναφοράς</button>
+        </form>
+
+        <div class="footer">
+            <p>MACC PULSE © 2025 - Σύγχρονο φύλλο εβδομαδιαίας αναφοράς</p>
+        </div>
+    </div>
+
+    <script>
+        // Ενημέρωση της μπάρας προόδου με βάση την τιμή του slider
+        function updateProgressBar(value) {
+            document.getElementById('progressFill').style.width = value + '%';
+            document.getElementById('progressPercentage').textContent = value + '%';
+        }
+
+        // Αποθήκευση δεδομένων σε τοπική μνήμη ως προσωρινό πρόχειρο
+        function saveFormDraft() {
+            const formData = new FormData(document.getElementById('maccPulseForm'));
+            const formValues = {};
+            for (const [key, value] of formData.entries()) {
+                formValues[key] = value;
+            }
+            localStorage.setItem('maccPulseDraft', JSON.stringify(formValues));
+        }
+
+        // Φόρτωση προσωρινού πρόχειρου από τοπική μνήμη
+        function loadFormDraft() {
+            const savedData = localStorage.getItem('maccPulseDraft');
+            if (savedData) {
+                const formValues = JSON.parse(savedData);
+                Object.keys(formValues).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'range') {
+                            element.value = formValues[key];
+                            updateProgressBar(formValues[key]);
+                        } else {
+                            element.value = formValues[key];
+                        }
+                    }
+                });
+            }
+        }
+
+        // Φόρτωση προσωρινού πρόχειρου κατά την αρχικοποίηση της σελίδας
+        window.addEventListener('load', loadFormDraft);
+
+        // Αποθήκευση προσωρινού πρόχειρου κάθε 30 δευτερόλεπτα
+        setInterval(saveFormDraft, 30000);
+
+        document.getElementById('maccPulseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Αντικαταστήστε με το URL του δικού σας Google Apps Script
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbw92AjBwKHrb3HFovkw1sxhWuQu6nkk1Kb6eY7FRUPsYu7sONBgkCxh0yBwX7hA_WRpYw/exec';
+
+            // Δημιουργία αντικειμένου δεδομένων από τη φόρμα
+            const formData = new FormData(this);
+            const data = {};
+            for (const [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            // Εμφάνιση μηνύματος φόρτωσης
+            const submitButton = document.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Αποθήκευση...';
+
+            // Αποστολή δεδομένων στο Google Script
+            fetch(scriptURL, {
+                method: 'POST',
+                body: new URLSearchParams(data),
+                mode: 'no-cors'
+            })
+            .then(response => {
+                // Εμφάνιση μηνύματος επιτυχίας
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+                
+                // Καθαρισμός προσωρινού πρόχειρου
+                localStorage.removeItem('maccPulseDraft');
+                
+                // Επαναφορά κουμπιού
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+                
+                // Κύλιση στην κορυφή της σελίδας για να δει ο χρήστης το μήνυμα επιτυχίας
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            })
+            .catch(error => {
+                // Εμφάνιση μηνύματος σφάλματος
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('errorText').textContent = 'Σφάλμα κατά την αποθήκευση: ' + error.message;
+                
+                // Επαναφορά κουμπιού
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+                
+                // Κύλιση στην κορυφή της σελίδας για να δει ο χρήστης το μήνυμα σφάλματος
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                console.error('Error!', error.message);
+            });
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDsbVLSS20KCje%2FVivaUuC8i0zimzy5eC6PQ%2Fh0h7JBlojlM8WoDgisOD1%2FV88q69DGOU8MtSdEuOD9EZn5WnRZlQWPQo63iK9A3gi0Hs4Gujwq%2FpRgMtgG013r7x9YXLsEiWx8GEcoFQotlNRAaEuSGEdyVlZzvjMtbSwspkSCEoG042YBtu9aUSnIcwHW4RipO0%2Bq6NZ9hs65ALn0A6mRslESvQAs61RQCaoJn6gXPHat58sA%2F3paBR83blbrQ1zaXNAXmzNX85eEfJScKbdGOjwF0Ld4DqEap%2F34rWOsjvgDBc26DWHoWDLMPjH92H%2BFibqFepDkAysMZLMxILUA%2F2o6NEWlLy0XTKLz%2F3yw8ifjbdRSquiZ334ky9boiaxfu7qtspOx8YZOXd5hTEybgVbKreCAdcw1g7vUoUL7PYBeBGdS3qH99uTor8j8ruPrOVLvMRvt3FP4PirUbUpJpiMBvm%2BwOs65OETnurtYgmQpTlcOCqka7rFRZ9J5je%2FA%3D%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDsbVLSS20KCje/VivaUuC8i0zimzy5eC6PQ/h0h7JBlojlM8WoDgisOD1/V88q69DGOU8MtSdEuOD9EZn5WnRZlQWPQo63iK9A3gi0Hs4Gujwq/pRgMtgG013r7x9YXLsEiWx8GEcoFQotlNRAaEuSGEdyVlZzvjMtbSwspkSCEoG042YBtu9aUSnIcwHW4RipO0+q6NZ9hs65ALn0A6mRslESvQAs61RQCaoJn6gXPHat58sA/3paBR83blbrQ1zaXNAXmzNX85eEfJScKbdGOjwF0Ld4DqEap/34rWOsjvgDBc26DWHoWDLMPjH92H+FibqFepDkAysMZLMxILUA/2o6NEWlLy0XTKLz/3yw8ifjbdRSquiZ334ky9boiaxfu7qtspOx8YZOXd5hTEybgVbKreCAdcw1g7vUoUL7PYBeBGdS3qH99uTor8j8ruPrOVLvMRvt3FP4PirUbUpJpiMBvm+wOs65OETnurtYgmQpTlcOCqka7rFRZ9J5je/A==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
